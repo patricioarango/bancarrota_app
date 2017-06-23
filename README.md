@@ -6,13 +6,15 @@ Importante: Avisar al Capo cuál es el dominio en el que se va a usar esta genia
 Pasos:
 1. Log In con Google y Crear QR Code.
 
-	controller
+	controller	
 	bancarrota_app/login
 	
 	view
 	bancarrota/app_login.php
+	
 	assets/images
 	google_logo.png
+	
 
 2. Sincronizar Categorías. 
 Se recomienda poner el script en un listado o similar, porque lo que hace es escribir TODAS las categorias/subcategorias cada vez que hay un cambio.
