@@ -96,7 +96,7 @@
     }); 
   });
 
-  enviar_importes_firebase = function(e){
+  /*enviar_importes_firebase = function(e){
     db.ref('/bancarrota/transacciones/no_procesadas').push({
       google_id: '8G40UvTwqoXTaakwOnwpeOj4QWZ2', 
       importe: e,
@@ -107,7 +107,7 @@
   
   var importes = [54,35,23,12,50];
 
-  importes.map(enviar_importes_firebase);
+  importes.map(enviar_importes_firebase);*/
 
 
 
