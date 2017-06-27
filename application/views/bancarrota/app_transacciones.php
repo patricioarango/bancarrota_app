@@ -46,7 +46,7 @@
     console.log("traer_transacciones_a_sincronizar");
     var google_id = localStorage.getItem("google_id");
     var html;
-   db.ref('/bancarrota/transacciones').orderByChild('google_id').equalTo(google_id).once('value').then(function(snapshot) {
+   db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).once('value').then(function(snapshot) {
       var transacciones = snapshot.val();
       
       if (transacciones == null){
@@ -75,7 +75,7 @@
     console.log("sincronizar_transacciones");
     var google_id = localStorage.getItem("google_id");
     var html;
-    db.ref('/bancarrota/transacciones').orderByChild('google_id').equalTo(google_id).once('value').then(function(snapshot) {
+    db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).once('value').then(function(snapshot) {
       var transacciones = snapshot.val();
       
       if (transacciones == null){
@@ -83,13 +83,10 @@
       } else {
         $.each(transacciones, function(key, transaccion) {
             console.log("updateado");
+            db.ref('/bancarrota/transacciones/no_procesadas/'+key).remove();
+            db.ref('/bancarrota/transacciones/procesadas/'+key).set(transaccion);
             //para updatear PHP dentro de este each se puede enviar por AJAX POST
-            $.each(transaccion, function(campo, valor) {
-              if (campo == "procesado" && valor == 0){
-              var updateado = db.ref('/bancarrota/transacciones/'+key).update({procesado: 1});
-              //$.post('/path/to/file', {param1: 'value1'}, function(data, textStatus, xhr) { });
-              }
-           });
+            //$.post('/path/to/file', {param1: 'value1'}, function(data, textStatus, xhr) { });
         });
       }
       window.location.reload();  
