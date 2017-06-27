@@ -17,7 +17,17 @@ Pasos:
 	
 
 2. Sincronizar Categorías. 
-Se recomienda poner el script en un listado o similar, porque lo que hace es escribir TODAS las categorias/subcategorias cada vez que hay un cambio.
+Se recomienda poner el script en un listado o similar, porque lo que hace es escribir TODAS las categorias/subcategorias cada vez que hay un cambio. El formato que hay formar con PHP es el siguiente:
+
+ $categorias_fb[] = array(
+          "id_subcategoria" => (int),
+          "id_categoria" => (int),
+          "subcategoria" => (string),
+          "categoria" => (string),
+          "icono" => (string),
+          "emoji" => (string), //nombres de íconos de Material Design
+          "acceso_rapido" => (int) //determina si la subcategoría se muestra en home de app
+          );
 
 	controller
 	bancarrota_app/sincronizar_categorias
