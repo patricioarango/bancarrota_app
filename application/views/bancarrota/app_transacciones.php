@@ -46,7 +46,7 @@
     console.log("traer_transacciones_a_sincronizar");
     var google_id = localStorage.getItem("google_id");
     var html;
-    db.ref('/bancarrota/'+google_id+'/transacciones').orderByChild('procesado').startAt(1).once('value').then(function(snapshot) {
+   db.ref('/bancarrota/transacciones').orderByChild('google_id').equalTo(google_id).once('value').then(function(snapshot) {
       var transacciones = snapshot.val();
       
       if (transacciones == null){
@@ -75,27 +75,40 @@
     console.log("sincronizar_transacciones");
     var google_id = localStorage.getItem("google_id");
     var html;
-    db.ref('/bancarrota/'+google_id+'/transacciones').orderByChild('procesado').startAt(1).once('value').then(function(snapshot) {
+    db.ref('/bancarrota/transacciones').orderByChild('google_id').equalTo(google_id).once('value').then(function(snapshot) {
       var transacciones = snapshot.val();
       
       if (transacciones == null){
         html = "No hay Transacciones para Sincronizar";
       } else {
         $.each(transacciones, function(key, transaccion) {
-            var updateado = db.ref('/bancarrota/'+google_id+'/transacciones/'+key).update({procesado: 1});
             console.log("updateado");
             //para updatear PHP dentro de este each se puede enviar por AJAX POST
             $.each(transaccion, function(campo, valor) {
+              if (campo == "procesado" && valor == 0){
+              var updateado = db.ref('/bancarrota/transacciones/'+key).update({procesado: 1});
               //$.post('/path/to/file', {param1: 'value1'}, function(data, textStatus, xhr) { });
+              }
            });
         });
       }
       window.location.reload();  
     }); 
   });
+
+  /*enviar_importes_firebase = function(e){
+    db.ref('/bancarrota/transacciones').push({
+      google_id: '8G40UvTwqoXTaakwOnwpeOj4QWZ2', 
+      importe: e,
+      procesado: 0,
+      fecha: Date.now()
+    });
+  }
   
-  
-  
+  var importes = [54,35,23,12,50];
+
+  importes.map(enviar_importes_firebase);*/
+
 
 
 </script>
