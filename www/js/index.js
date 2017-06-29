@@ -65,9 +65,9 @@ connectedRef.on("value", function(snap) {
     conexion = true;
     sincronizar_subcategorias();
     sincronizar_transacciones();
-  } else {
+} else {
     conexion = false;
-  }
+}
 });
 
 
@@ -79,18 +79,20 @@ function traer_categorias(){
     if (subcategorias.length > 0){
         $.each(subcategorias, function(index, val) {
           var colors = ["teal","blue","red","green","brown","orange","teal","blue","red","green","brown","orange","purple","teal","blue","red","green","brown","orange","teal","blue","red","green"];
-            if (val.acceso_rapido == 1){
-              $("#insert").append('<li><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;" >'+val.subcategoria+'</div><div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
-                  '<input type="number" class="white-text" name="importe" id="importe_'+val.id_subcategoria+'" style="border-bottom:1px solid white;">'+
-                  '<input type="hidden" name="id_subcategoria_2" value="'+val.id_subcategoria+'">'+
-                  '<button class="btn btn-floating btn-large pink pulse enviar_transaccion right" data-posicion="'+posicion+'" value="'+val.id_subcategoria+'"><i class="material-icons">send</i></button>'+
-                  '</div></li>');
+          if (val.acceso_rapido == 1){
+              $("#insert").append('<li><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s2 offset-s5"><i class="material-icons large">'+val.icono+'</i>'+val.subcategoria+'</div></div>'+
+                '<div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
+                '<input type="number" class="white-text" name="importe" placeholder="importe" id="importe_'+val.id_subcategoria+'" style="border-bottom:1px solid white;">'+
+                '<input type="text" class="white-text" name="observacion" placeholder="observacion" id="observacion_'+val.id_subcategoria+'" style="border-bottom:1px solid white;">'+
+                '<input type="hidden" name="id_subcategoria_2" value="'+val.id_subcategoria+'">'+
+                '<button class="btn btn-floating btn-large pink pulse enviar_transaccion right" data-posicion="'+posicion+'" value="'+val.id_subcategoria+'"><i class="material-icons">send</i></button>'+
+                '</div></li>');
               ++posicion;
-            }
-        }); 
-    } else {
-        $("#insert").append('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
-    }
+          }
+      }); 
+} else {
+    $("#insert").append('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
+}
 }
 
 $("#escanear").on('click',function(e) {
@@ -99,7 +101,7 @@ $("#escanear").on('click',function(e) {
 });
 
 function getQrCode(){
-        cordova.plugins.barcodeScanner.scan(
+    cordova.plugins.barcodeScanner.scan(
       function (result) {
           codigo_escaneado(result.text);
         /*
@@ -107,19 +109,19 @@ function getQrCode(){
                 "Result: " + result.text + "\n" +
                 "Format: " + result.format + "\n" +
                 "Cancelled: " + result.cancelled);
-        */        
-      }, 
-      function (error) {
-          alert("Scanning failed: " + error);
-      },
-      {
+    */        
+}, 
+function (error) {
+  alert("Scanning failed: " + error);
+},
+{
           "preferFrontCamera" : false, // iOS and Android
           "showFlipCameraButton" : true, // iOS and Android
           "prompt" : "Escanea el codigo de barras del sitio", // supported on Android only
           "formats" : "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
           "orientation" : "portrait" // Android only (portrait|landscape), default unset so it rotates with the device
       }
-   );
+      );
 }
 
 function codigo_escaneado(qrcode){
@@ -147,47 +149,47 @@ $(function(){
     $('.collapsible').collapsible();
 });
 
-  $(document).on('click',".enviar_transaccion", function(event) {
+$(document).on('click',".enviar_transaccion", function(event) {
     event.preventDefault();
     var id = $(this).val();
     var posicion = $(this).data("posicion");
     var importe = $("#importe_" + id).val();
     var id_transaccion = get_transaccion();
-        guardar_transaccion(id_transaccion,importe,id);
-      limpiar_transaccion(id,posicion);
-      if (conexion){
+    guardar_transaccion(id_transaccion,importe,id);
+    limpiar_transaccion(id,posicion);
+    if (conexion){
       sincronizar_transacciones();
-      }
-  });   
+  }
+});   
 
-  function get_transaccion(){
+function get_transaccion(){
     var id_transaccion = localStorage.getItem("id_transaccion");
-        if (id_transaccion == null){
-            id_transaccion = 0;
-        }
+    if (id_transaccion == null){
+        id_transaccion = 0;
+    }
     var nuevo_id_transaccion = parseInt(id_transaccion) + 1;
     localStorage.setItem("id_transaccion",nuevo_id_transaccion);    
     return nuevo_id_transaccion;    
-  }
+}
 
-  function guardar_transaccion(id_transaccion,importe,id_subcategoria){
+function guardar_transaccion(id_transaccion,importe,id_subcategoria){
     localStorage.setItem("bancarrota_id_subcategoria_" + id_transaccion,id_subcategoria); 
     localStorage.setItem("bancarrota_importe_" + id_transaccion,importe); 
-  }
+}
 
-  function limpiar_transaccion(id_subcategoria,posicion){
+function limpiar_transaccion(id_subcategoria,posicion){
     var importe = $("#importe_" + id_subcategoria).val('');
-      $('.collapsible').collapsible('close', posicion);
-  }
+    $('.collapsible').collapsible('close', posicion);
+}
 
-  function sincronizar_transacciones(){
+function sincronizar_transacciones(){
     var id_transaccion = parseInt(localStorage.getItem("id_transaccion"));
     if (id_transaccion > 0) {
         for (i = 1; i<=id_transaccion; i++){
             db.ref("/bancarrota/transacciones/no_procesadas").push({
                 importe: localStorage.getItem("bancarrota_importe_" + i),
                 id_subcategoria: localStorage.getItem("bancarrota_id_subcategoria_" + i),
-          google_id: localStorage.getItem("bancarrota_google_id"),
+                google_id: localStorage.getItem("bancarrota_google_id"),
                 fecha: firebase.database.ServerValue.TIMESTAMP
             });
             console.log(localStorage.getItem("bancarrota_id_subcategoria_" + i));
@@ -197,4 +199,4 @@ $(function(){
             localStorage.removeItem("id_transaccion");
         }
     }
-  }    
+}    
