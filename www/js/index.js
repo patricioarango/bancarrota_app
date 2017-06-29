@@ -78,7 +78,7 @@ function traer_categorias(){
     var posicion = 0;
     if (subcategorias.length > 0){
         $.each(subcategorias, function(index, val) {
-          var colors = ["teal","blue","red","green","brown","orange","teal","blue","red","green","brown","orange","purple","teal","blue","red","green","brown","orange","teal","blue","red","green"];
+        var colors = ["light-blue lighten-1","blue lighten-1","light-blue","blue","light-blue darken-1","blue darken-1","light-blue darken-2","blue darken-2","light-blue darken-3","blue darken-3","light-blue darken-4","blue darken-4","indigo darken-4","indigo lighten-1","indigo","indigo darken-1","indigo darken-2","indigo darken-3"];
           if (val.acceso_rapido == 1){
             $("#insert").append('<li class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s2 offset-s5"><i class="material-icons large">'+val.icono+'</i>'+val.subcategoria+'</div></div>'+
                 '<div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
