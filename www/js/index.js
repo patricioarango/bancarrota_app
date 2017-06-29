@@ -78,7 +78,6 @@ function traer_categorias(){
     var posicion = 0;
     if (subcategorias.length > 0){
         $.each(subcategorias, function(index, val) {
-          get_index_1_to_10(index);  
           var colors = ["teal","blue","red","green","brown","orange","teal","blue","red","green","brown","orange","purple","teal","blue","red","green","brown","orange","teal","blue","red","green"];
             if (val.acceso_rapido == 1){
               $("#insert").append('<li><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;" >'+val.subcategoria+'</div><div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
@@ -188,7 +187,7 @@ $(function(){
             db.ref("/bancarrota/transacciones/no_procesadas").push({
                 importe: localStorage.getItem("bancarrota_importe_" + i),
                 id_subcategoria: localStorage.getItem("bancarrota_id_subcategoria_" + i),
-          google_id: '8G40UvTwqoXTaakwOnwpeOj4QWZ2',
+          google_id: localStorage.getItem("bancarrota_google_id"),
                 fecha: firebase.database.ServerValue.TIMESTAMP
             });
             console.log(localStorage.getItem("bancarrota_id_subcategoria_" + i));
