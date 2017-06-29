@@ -129,6 +129,9 @@ function codigo_escaneado(qrcode){
     var datos = data.split(';');
     window.localStorage.setItem("bancarrota_google_id",datos[0]);
     window.localStorage.setItem("bancarrota_nombre",datos[1]);
+    window.localStorage.setItem("bancarrota_email",datos[2]);
+    window.localStorage.setItem("bancarrota_photoURL",datos[3]);
+    window.localStorage.setItem("bancarrota_site_url",datos[4]);
     window.localStorage.setItem("bancarrota_registrado",1);
     traer_categorias();
 }
