@@ -1,0 +1,8 @@
+/res
+/platforms
+/plugins
+ganzua.sublime-workspace
+database.rules.json
+firebase.json
+/public/
+.firebaserc

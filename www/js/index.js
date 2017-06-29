@@ -80,12 +80,12 @@ function traer_categorias(){
         $.each(subcategorias, function(index, val) {
           var colors = ["teal","blue","red","green","brown","orange","teal","blue","red","green","brown","orange","purple","teal","blue","red","green","brown","orange","teal","blue","red","green"];
           if (val.acceso_rapido == 1){
-              $("#insert").append('<li><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s2 offset-s5"><i class="material-icons large">'+val.icono+'</i>'+val.subcategoria+'</div></div>'+
+            $("#insert").append('<li class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s2 offset-s5"><i class="material-icons large">'+val.icono+'</i>'+val.subcategoria+'</div></div>'+
                 '<div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
                 '<input type="number" class="white-text" name="importe" placeholder="importe" id="importe_'+val.id_subcategoria+'" style="border-bottom:1px solid white;">'+
                 '<input type="text" class="white-text" name="observacion" placeholder="observacion" id="observacion_'+val.id_subcategoria+'" style="border-bottom:1px solid white;">'+
                 '<input type="hidden" name="id_subcategoria_2" value="'+val.id_subcategoria+'">'+
-                '<button class="btn btn-floating btn-large pink pulse enviar_transaccion right" data-posicion="'+posicion+'" value="'+val.id_subcategoria+'"><i class="material-icons">send</i></button>'+
+                '<button style="margin-top:20px;" class="btn btn-floating btn-large pink pulse enviar_transaccion right" data-posicion="'+posicion+'" value="'+val.id_subcategoria+'"><i class="material-icons">send</i></button>'+
                 '</div></li>');
               ++posicion;
           }
