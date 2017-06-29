@@ -78,9 +78,10 @@ function traer_categorias(){
     var posicion = 0;
     if (subcategorias.length > 0){
         $.each(subcategorias, function(index, val) {
-          var colors = ["teal","blue","red","green","brown","orange","teal","blue","red","green","brown","orange","purple","teal","blue","red","green","brown","orange","teal","blue","red","green","brown","orange","purple","teal","blue","red","green","brown","orange","teal","blue","red","green","brown","orange","purple","teal","blue","red","green","brown","orange","teal","blue","red","green","brown","orange","purple"];
+          get_index_1_to_10(index);  
+          var colors = ["teal","blue","red","green","brown","orange","teal","blue","red","green","brown","orange","purple","teal","blue","red","green","brown","orange","teal","blue","red","green"];
             if (val.acceso_rapido == 1){
-              $("#insert").append('<li><div class="collapsible-header '+colors[index]+' white-text" style="border-bottom:0px;" >'+val.subcategoria+'</div><div class="collapsible-body '+colors[index]+'" style="border-bottom:0px;">'+
+              $("#insert").append('<li><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;" >'+val.subcategoria+'</div><div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
                   '<input type="number" class="white-text" name="importe" id="importe_'+val.id_subcategoria+'" style="border-bottom:1px solid white;">'+
                   '<input type="hidden" name="id_subcategoria_2" value="'+val.id_subcategoria+'">'+
                   '<button class="btn btn-floating btn-large pink pulse enviar_transaccion right" data-posicion="'+posicion+'" value="'+val.id_subcategoria+'"><i class="material-icons">send</i></button>'+
