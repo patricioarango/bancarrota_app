@@ -154,8 +154,9 @@ $(document).on('click',".enviar_transaccion", function(event) {
     var id = $(this).val();
     var posicion = $(this).data("posicion");
     var importe = $("#importe_" + id).val();
+    var observacion = $("#observacion_" + id).val();
     var id_transaccion = get_transaccion();
-    guardar_transaccion(id_transaccion,importe,id);
+    guardar_transaccion(id_transaccion,importe,id,observacion);
     limpiar_transaccion(id,posicion);
     if (conexion){
       sincronizar_transacciones();
@@ -172,13 +173,15 @@ function get_transaccion(){
     return nuevo_id_transaccion;    
 }
 
-function guardar_transaccion(id_transaccion,importe,id_subcategoria){
+function guardar_transaccion(id_transaccion,importe,id_subcategoria,observacion){
     localStorage.setItem("bancarrota_id_subcategoria_" + id_transaccion,id_subcategoria); 
     localStorage.setItem("bancarrota_importe_" + id_transaccion,importe); 
+    localStorage.setItem("bancarrota_observacion_" + id_transaccion,observacion); 
 }
 
 function limpiar_transaccion(id_subcategoria,posicion){
-    var importe = $("#importe_" + id_subcategoria).val('');
+    $("#importe_" + id_subcategoria).val('');
+    $("#observacion_" + id_subcategoria).val('');
     $('.collapsible').collapsible('close', posicion);
 }
 
@@ -189,13 +192,13 @@ function sincronizar_transacciones(){
             db.ref("/bancarrota/transacciones/no_procesadas").push({
                 importe: localStorage.getItem("bancarrota_importe_" + i),
                 id_subcategoria: localStorage.getItem("bancarrota_id_subcategoria_" + i),
+                observacion: localStorage.getItem("bancarrota_observacion_" + i),
                 google_id: localStorage.getItem("bancarrota_google_id"),
                 fecha: firebase.database.ServerValue.TIMESTAMP
             });
-            console.log(localStorage.getItem("bancarrota_id_subcategoria_" + i));
-            console.log(localStorage.getItem("bancarrota_importe_" + i));
             localStorage.removeItem("bancarrota_importe_" + i);
             localStorage.removeItem("bancarrota_id_subcategoria_" + i);
+            localStorage.removeItem("bancarrota_observacion_" + i),
             localStorage.removeItem("id_transaccion");
         }
     }
