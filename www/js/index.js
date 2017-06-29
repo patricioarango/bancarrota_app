@@ -57,21 +57,40 @@ var config = {
 };
 firebase.initializeApp(config);
 var db = firebase.database();
+
+var connectedRef = db.ref(".info/connected");
+var conexion;
+connectedRef.on("value", function(snap) {
+  if (snap.val() === true) {
+    conexion = true;
+    sincronizar_subcategorias();
+    sincronizar_transacciones();
+  } else {
+    conexion = false;
+  }
+});
+
+
 function traer_categorias(){
     $("#first_time_home").hide();
     $("#categorias_container").show();
-    var google_id = window.localStorage.getItem("bancarrota_google_id");
-    console.log("traer_categorias");
-    db.ref('/bancarrota/'+google_id+'/subcategorias').on('value', function(snapshot) {
-        subcategorias = snapshot.val();
-        $.each(subcategorias, function(key, value) { 
-            $("#categorias_container").append('<div class="col s12 '+colors[key]+' white-text" style="padding:20px;">'+
-                '<div class="container">'+
-                '<div class="col s4"><i class="material-icons medium">'+value.icono+'</i></div>'+
-                '<div class="col s8">'+'<p class="flow-text">'+value.subcategoria+'</p></div>'+
-                '</div></div>');
-        });
-    });
+    var subcategorias = JSON.parse(window.localStorage.getItem("bancarrota_subcategorias"));
+    var posicion = 0;
+    if (subcategorias.length > 0){
+        $.each(subcategorias, function(index, val) {
+          var colors = ["teal","blue","red","green","brown","orange","teal","blue","red","green","brown","orange","purple","teal","blue","red","green","brown","orange","teal","blue","red","green","brown","orange","purple","teal","blue","red","green","brown","orange","teal","blue","red","green","brown","orange","purple","teal","blue","red","green","brown","orange","teal","blue","red","green","brown","orange","purple"];
+            if (val.acceso_rapido == 1){
+              $("#insert").append('<li><div class="collapsible-header '+colors[index]+' white-text" style="border-bottom:0px;" >'+val.subcategoria+'</div><div class="collapsible-body '+colors[index]+'" style="border-bottom:0px;">'+
+                  '<input type="number" class="white-text" name="importe" id="importe_'+val.id_subcategoria+'" style="border-bottom:1px solid white;">'+
+                  '<input type="hidden" name="id_subcategoria_2" value="'+val.id_subcategoria+'">'+
+                  '<button class="btn btn-floating btn-large pink pulse enviar_transaccion right" data-posicion="'+posicion+'" value="'+val.id_subcategoria+'"><i class="material-icons">send</i></button>'+
+                  '</div></li>');
+              ++posicion;
+            }
+        }); 
+    } else {
+        $("#insert").append('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
+    }
 }
 
 $("#escanear").on('click',function(e) {
@@ -112,3 +131,67 @@ function codigo_escaneado(qrcode){
     window.localStorage.setItem("bancarrota_registrado",1);
     traer_categorias();
 }
+
+function sincronizar_subcategorias(){
+    var google_id = window.localStorage.getItem("bancarrota_google_id");
+    console.log("sincronizar_subcategorias");
+    db.ref('/bancarrota/'+google_id+'/subcategorias').on('value', function(snapshot) {
+        window.localStorage.setItem("bancarrota_subcategorias",JSON.stringify(snapshot.val()));
+    });    
+}
+
+$(function(){
+    $('.collapsible').collapsible();
+});
+
+  $(document).on('click',".enviar_transaccion", function(event) {
+    event.preventDefault();
+    var id = $(this).val();
+    var posicion = $(this).data("posicion");
+    var importe = $("#importe_" + id).val();
+    var id_transaccion = get_transaccion();
+        guardar_transaccion(id_transaccion,importe,id);
+      limpiar_transaccion(id,posicion);
+      if (conexion){
+      sincronizar_transacciones();
+      }
+  });   
+
+  function get_transaccion(){
+    var id_transaccion = localStorage.getItem("id_transaccion");
+        if (id_transaccion == null){
+            id_transaccion = 0;
+        }
+    var nuevo_id_transaccion = parseInt(id_transaccion) + 1;
+    localStorage.setItem("id_transaccion",nuevo_id_transaccion);    
+    return nuevo_id_transaccion;    
+  }
+
+  function guardar_transaccion(id_transaccion,importe,id_subcategoria){
+    localStorage.setItem("bancarrota_id_subcategoria_" + id_transaccion,id_subcategoria); 
+    localStorage.setItem("bancarrota_importe_" + id_transaccion,importe); 
+  }
+
+  function limpiar_transaccion(id_subcategoria,posicion){
+    var importe = $("#importe_" + id_subcategoria).val('');
+      $('.collapsible').collapsible('close', posicion);
+  }
+
+  function sincronizar_transacciones(){
+    var id_transaccion = parseInt(localStorage.getItem("id_transaccion"));
+    if (id_transaccion > 0) {
+        for (i = 1; i<=id_transaccion; i++){
+            db.ref("/bancarrota/transacciones/no_procesadas").push({
+                importe: localStorage.getItem("bancarrota_importe_" + i),
+                id_subcategoria: localStorage.getItem("bancarrota_id_subcategoria_" + i),
+          google_id: '8G40UvTwqoXTaakwOnwpeOj4QWZ2',
+                fecha: firebase.database.ServerValue.TIMESTAMP
+            });
+            console.log(localStorage.getItem("bancarrota_id_subcategoria_" + i));
+            console.log(localStorage.getItem("bancarrota_importe_" + i));
+            localStorage.removeItem("bancarrota_importe_" + i);
+            localStorage.removeItem("bancarrota_id_subcategoria_" + i);
+            localStorage.removeItem("id_transaccion");
+        }
+    }
+  }    
