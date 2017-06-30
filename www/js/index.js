@@ -149,6 +149,7 @@ function sincronizar_subcategorias(){
 
 $(function(){
     $('.collapsible').collapsible();
+    calcular_cantidades();
 });
 
 $(document).on('click',".enviar_transaccion", function(event) {
