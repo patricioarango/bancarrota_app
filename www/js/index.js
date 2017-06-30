@@ -70,10 +70,9 @@ connectedRef.on("value", function(snap) {
 }
 });
 
-
 function traer_categorias(){
     $("#first_time_home").hide();
-    $("#categorias_container").show();
+    $("#second_time_home").show();
     var subcategorias = JSON.parse(window.localStorage.getItem("bancarrota_subcategorias"));
     var posicion = 0;
     if (subcategorias.length > 0){
@@ -134,15 +133,18 @@ function codigo_escaneado(qrcode){
     window.localStorage.setItem("bancarrota_photoURL",datos[3]);
     window.localStorage.setItem("bancarrota_site_url",datos[4]);
     window.localStorage.setItem("bancarrota_registrado",1);
+    sincronizar_subcategorias();
     traer_categorias();
 }
 
 function sincronizar_subcategorias(){
-    var google_id = window.localStorage.getItem("bancarrota_google_id");
     console.log("sincronizar_subcategorias");
-    db.ref('/bancarrota/'+google_id+'/subcategorias').on('value', function(snapshot) {
-        window.localStorage.setItem("bancarrota_subcategorias",JSON.stringify(snapshot.val()));
-    });    
+    var google_id = window.localStorage.getItem("bancarrota_google_id");
+    if (google_id != null){
+        db.ref('/bancarrota/'+google_id+'/subcategorias').on('value', function(snapshot) {
+            window.localStorage.setItem("bancarrota_subcategorias",JSON.stringify(snapshot.val()));
+        });
+    }    
 }
 
 $(function(){
