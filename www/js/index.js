@@ -222,7 +222,7 @@ function calcular_enviadas(){
         if (transacciones == null){
             $("#enviadas").text("0");        
         } else {
-            $("#enviadas").text(transacciones.length.toString());
+            $("#enviadas").text(transacciones.length);
         }
     });  
 } 
