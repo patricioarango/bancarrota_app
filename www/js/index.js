@@ -79,7 +79,7 @@ function traer_categorias(){
         $.each(subcategorias, function(index, val) {
         var colors = ["light-blue lighten-1","blue lighten-1","light-blue","blue","light-blue darken-1","blue darken-1","light-blue darken-2","blue darken-2","light-blue darken-3","blue darken-3","light-blue darken-4","blue darken-4","indigo darken-4","indigo lighten-1","indigo","indigo darken-1","indigo darken-2","indigo darken-3"];
           if (val.acceso_rapido == 1){
-            $("#insert").append('<li class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s7 offset-s2"><i class="material-icons large">'+val.icono+'</i>'+val.subcategoria+'</div></div>'+
+            $("#insert").append('<li data-posicionscroll="'+posicion+'" class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s7 offset-s2"><i class="material-icons large">'+val.icono+'</i>'+val.subcategoria+'</div></div>'+
                 '<div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
                 '<input type="number" class="white-text" name="importe" placeholder="importe" id="importe_'+val.id_subcategoria+'" style="border-bottom:1px solid white;">'+
                 '<input type="text" class="white-text" name="observacion" placeholder="observacion" id="observacion_'+val.id_subcategoria+'" style="border-bottom:1px solid white;">'+
@@ -212,6 +212,7 @@ function calcular_cantidades(){
     calcular_enviadas();
      calcular_para_sincronizar();
 }
+
 function calcular_enviadas(){
    db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(user.uid).on('value', function(snapshot) {
       var transacciones = snapshot.val();
@@ -231,3 +232,11 @@ function calcular_para_sincronizar(){
             $("#para_sincronizar").text(transacciones2.length.toString());
         }
 }    
+
+$('#insert').on('click', 'li', function(e){
+    e.preventDefault();
+    var posicionscroll = $(this).data("posicionscroll");
+    var cantidad = (posicionscroll * 250);
+    console.log(cantidad);
+    $("html, body").animate({ scrollTop: cantidad }, 600);
+});
