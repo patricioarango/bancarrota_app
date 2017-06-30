@@ -230,9 +230,9 @@ function calcular_enviadas(){
 function calcular_para_sincronizar(){
     var transacciones2 = localStorage.getItem("id_transaccion");   
         if (transacciones2 == null){
-            $("#para_sincronizar").hmtl("0");        
+            $("#para_sincronizar").html("0");        
         } else {
-            $("#para_sincronizar").hmtl(transacciones2.length.toString());
+            $("#para_sincronizar").html(transacciones2.length);
         }
 }    
 
