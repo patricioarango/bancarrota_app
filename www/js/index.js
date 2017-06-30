@@ -62,10 +62,12 @@ var connectedRef = db.ref(".info/connected");
 var conexion;
 connectedRef.on("value", function(snap) {
   if (snap.val() === true) {
+    console.log("conexion online");
     conexion = true;
     sincronizar_subcategorias();
     sincronizar_transacciones();
 } else {
+    console.log("conexion offline");
     conexion = false;
 }
 });
