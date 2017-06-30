@@ -214,7 +214,8 @@ function calcular_cantidades(){
 }
 
 function calcular_enviadas(){
-   db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(user.uid).on('value', function(snapshot) {
+   var google_id = window.localStorage.getItem("bancarrota_google_id");
+   db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).on('value', function(snapshot) {
       var transacciones = snapshot.val();
         if (transacciones == null){
             $("#enviadas").text("0");        
