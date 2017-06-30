@@ -227,9 +227,9 @@ function calcular_enviadas(){
 function calcular_para_sincronizar(){
     var transacciones2 = localStorage.getItem("id_transaccion");   
         if (transacciones2 == null){
-            $("#para_sincronizar").text("0");        
+            $("#para_sincronizar").hmtl("0");        
         } else {
-            $("#para_sincronizar").text(transacciones2.length.toString());
+            $("#para_sincronizar").hmtl(transacciones2.length.toString());
         }
 }    
 
@@ -238,5 +238,5 @@ $('#insert').on('click', 'li', function(e){
     var posicionscroll = $(this).data("posicionscroll");
     var cantidad = (posicionscroll * 250);
     console.log(cantidad);
-    $("html, body").animate({ scrollTop: cantidad }, 600);
+    //$("html, body").animate({ scrollTop: cantidad }, 600);
 });
