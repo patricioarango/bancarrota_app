@@ -158,7 +158,7 @@ $(function(){
         if (transacciones == null){
             $("#enviadas").text("0 ");        
         } else {
-            $("#enviadas").text(transacciones.length + " ");
+            $("#enviadas").text(Object.keys(transacciones).length + " ");
         }
     });  
 
