@@ -184,8 +184,9 @@ function get_transaccion(){
         id_transaccion = 0;
     }
     var nuevo_id_transaccion = parseInt(id_transaccion) + 1;
-    localStorage.setItem("id_transaccion",nuevo_id_transaccion);    
-    return nuevo_id_transaccion;    
+    localStorage.setItem("id_transaccion",nuevo_id_transaccion);
+    calcular_para_sincronizar();    
+    return nuevo_id_transaccion;
 }
 
 function guardar_transaccion(id_transaccion,importe,id_subcategoria,observacion){
@@ -223,9 +224,9 @@ function sincronizar_transacciones(){
 function calcular_para_sincronizar(){
     var transacciones2 = localStorage.getItem("id_transaccion");   
         if (transacciones2 == null){
-            $("#para_sincronizar").html("0 ");        
+            $("#para_sincronizar").text("0 ");        
         } else {
-            $("#para_sincronizar").html(transacciones2 + " ");
+            $("#para_sincronizar").text(transacciones2 + " ");
         }
 }    
 
