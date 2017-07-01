@@ -151,7 +151,17 @@ function sincronizar_subcategorias(){
 
 $(function(){
     $('.collapsible').collapsible();
-    calcular_cantidades();
+
+   var google_id = window.localStorage.getItem("bancarrota_google_id");
+   db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).on('value', function(snapshot) {
+      var transacciones = snapshot.val();
+        if (transacciones == null){
+            $("#enviadas").text("0 ");        
+        } else {
+            $("#enviadas").text(transacciones.length + " ");
+        }
+    });  
+
 });
 
 $(document).on('click',".enviar_transaccion", function(event) {
@@ -182,7 +192,6 @@ function guardar_transaccion(id_transaccion,importe,id_subcategoria,observacion)
     localStorage.setItem("bancarrota_id_subcategoria_" + id_transaccion,id_subcategoria); 
     localStorage.setItem("bancarrota_importe_" + id_transaccion,importe); 
     localStorage.setItem("bancarrota_observacion_" + id_transaccion,observacion); 
-    calcular_cantidades();
 }
 
 function limpiar_transaccion(id_subcategoria,posicion){
@@ -208,31 +217,15 @@ function sincronizar_transacciones(){
             localStorage.removeItem("id_transaccion");
         }
     }
+    calcular_para_sincronizar();
 }
-
-function calcular_cantidades(){
-    calcular_enviadas();
-     calcular_para_sincronizar();
-}
-
-function calcular_enviadas(){
-   var google_id = window.localStorage.getItem("bancarrota_google_id");
-   db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).on('value', function(snapshot) {
-      var transacciones = snapshot.val();
-        if (transacciones == null){
-            $("#enviadas").text("0");        
-        } else {
-            $("#enviadas").text(transacciones.length);
-        }
-    });  
-} 
 
 function calcular_para_sincronizar(){
     var transacciones2 = localStorage.getItem("id_transaccion");   
         if (transacciones2 == null){
-            $("#para_sincronizar").html("0");        
+            $("#para_sincronizar").html("0 ");        
         } else {
-            $("#para_sincronizar").html(transacciones2.length);
+            $("#para_sincronizar").html(transacciones2 + " ");
         }
 }    
 
