@@ -78,22 +78,42 @@ function traer_categorias(){
     var subcategorias = JSON.parse(window.localStorage.getItem("bancarrota_subcategorias"));
     var posicion = 0;
     if (subcategorias.length > 0){
+        $("#insert").html("");
         $.each(subcategorias, function(index, val) {
-        var colors = ["light-blue lighten-1","blue lighten-1","light-blue","blue","light-blue darken-1","blue darken-1","light-blue darken-2","blue darken-2","light-blue darken-3","blue darken-3","light-blue darken-4","blue darken-4","indigo darken-4","indigo lighten-1","indigo","indigo darken-1","indigo darken-2","indigo darken-3"];
-          if (val.acceso_rapido == 1){
-            $("#insert").append('<li data-posicionscroll="'+posicion+'" class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s7 offset-s2"><i class="material-icons large">'+val.icono+'</i>'+val.subcategoria+'</div></div>'+
-                '<div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
-                '<input type="number" class="white-text" name="importe" placeholder="importe" id="importe_'+val.id_subcategoria+'" style="border-bottom:1px solid white;">'+
-                '<input type="text" class="white-text" name="observacion" placeholder="observacion" id="observacion_'+val.id_subcategoria+'" style="border-bottom:1px solid white;">'+
-                '<input type="hidden" name="id_subcategoria_2" value="'+val.id_subcategoria+'">'+
-                '<button style="margin-top:20px;" class="btn btn-floating btn-large pink pulse enviar_transaccion right" data-posicion="'+posicion+'" value="'+val.id_subcategoria+'"><i class="material-icons">send</i></button>'+
-                '</div></li>');
-              ++posicion;
-          }
-      }); 
-} else {
-    $("#insert").append('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
+            if (val.acceso_rapido == 1){
+                insertar_categoria_en_vista(posicion,val);
+                ++posicion;
+            }
+        }); 
+    } else {
+        $("#insert").append('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
+    }
 }
+
+function traer_categorias(){
+    $("#first_time_home").hide();
+    $("#second_time_home").show();
+    var subcategorias = JSON.parse(window.localStorage.getItem("bancarrota_subcategorias"));
+    var posicion = 0;
+    if (subcategorias.length > 0){
+        $("#insert").html("");
+        $.each(subcategorias, function(index, val) {
+                insertar_categoria_en_vista(posicion,val);
+                ++posicion;
+        }); 
+    } else {
+        $("#insert").append('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
+    }
+}
+function insertar_categoria_en_vista(posicion,categoria){
+        var colors = ["light-blue lighten-1","blue lighten-1","light-blue","blue","light-blue darken-1","blue darken-1","light-blue darken-2","blue darken-2","light-blue darken-3","blue darken-3","light-blue darken-4","blue darken-4","indigo darken-4","indigo lighten-1","indigo","indigo darken-1","indigo darken-2","indigo darken-3"];
+            $("#insert").append('<li data-posicionscroll="'+posicion+'" class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s7 offset-s2"><i class="material-icons large">'+categoria.icono+'</i>'+categoria.subcategoria+'</div></div>'+
+                '<div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
+                '<input type="number" class="white-text" name="importe" placeholder="importe" id="importe_'+categoria.id_subcategoria+'" style="border-bottom:1px solid white;">'+
+                '<input type="text" class="white-text" name="observacion" placeholder="observacion" id="observacion_'+categoria.id_subcategoria+'" style="border-bottom:1px solid white;">'+
+                '<input type="hidden" name="id_subcategoria_2" value="'+categoria.id_subcategoria+'">'+
+                '<button style="margin-top:20px;" class="btn btn-floating btn-large pink pulse enviar_transaccion right" data-posicion="'+posicion+'" value="'+categoria.id_subcategoria+'"><i class="material-icons">send</i></button>'+
+                '</div></li>');        
 }
 
 $("#escanear").on('click',function(e) {
