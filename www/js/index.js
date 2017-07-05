@@ -90,7 +90,7 @@ function traer_categorias(){
     }
 }
 
-function traer_categorias(){
+function traer_todas_categorias(){
     $("#first_time_home").hide();
     $("#second_time_home").show();
     var subcategorias = JSON.parse(window.localStorage.getItem("bancarrota_subcategorias"));
@@ -105,6 +105,7 @@ function traer_categorias(){
         $("#insert").append('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
     }
 }
+
 function insertar_categoria_en_vista(posicion,categoria){
         var colors = ["light-blue lighten-1","blue lighten-1","light-blue","blue","light-blue darken-1","blue darken-1","light-blue darken-2","blue darken-2","light-blue darken-3","blue darken-3","light-blue darken-4","blue darken-4","indigo darken-4","indigo lighten-1","indigo","indigo darken-1","indigo darken-2","indigo darken-3"];
             $("#insert").append('<li data-posicionscroll="'+posicion+'" class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s7 offset-s2"><i class="material-icons large">'+categoria.icono+'</i>'+categoria.subcategoria+'</div></div>'+
@@ -172,6 +173,15 @@ function sincronizar_subcategorias(){
 $(function(){
     $('.collapsible').collapsible();
 
+    $('.button-collapse').sideNav({
+          menuWidth: 400, // Default is 300
+          closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+          draggable: true, // Choose whether you can drag to open on touch screens,
+        }
+      );
+    $(".button-collapse").sideNav();
+    $('.button-collapse').sideNav('show');
+
    var google_id = window.localStorage.getItem("bancarrota_google_id");
    db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).on('value', function(snapshot) {
       var transacciones = snapshot.val();
@@ -182,6 +192,16 @@ $(function(){
         }
     });  
 
+   if (window.localStorage.getItem("bancarrota_registrado") == 1){
+    var nombre = window.localStorage.getItem("bancarrota_nombre");
+    var email = window.localStorage.getItem("bancarrota_email");
+    var foto = window.localStorage.getItem("bancarrota_photoURL");
+    $("#user_photoURL").attr('scr', foto);
+    $("#user_name").attr('scr', nombre);
+    $("#user_email").attr('scr', email);
+   }
+    
+    
 });
 
 $(document).on('click',".enviar_transaccion", function(event) {
