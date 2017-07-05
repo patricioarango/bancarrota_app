@@ -176,13 +176,12 @@ function sincronizar_subcategorias(){
 $(function(){
     $('.collapsible').collapsible();
 
-    $('.button-collapse').sideNav({
-          menuWidth: 200, // Default is 300
+    $('.mostrar_nav').sideNav({
+          menuWidth: 250, // Default is 300
           closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
           draggable: true, // Choose whether you can drag to open on touch screens,
         }
       );
-    $(".button-collapse").sideNav();
 
    var google_id = window.localStorage.getItem("bancarrota_google_id");
    db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).on('value', function(snapshot) {
@@ -198,9 +197,9 @@ $(function(){
     var nombre = window.localStorage.getItem("bancarrota_nombre");
     var email = window.localStorage.getItem("bancarrota_email");
     var foto = window.localStorage.getItem("bancarrota_photoURL");
-    $("#user_photoURL").attr('scr', foto);
-    $("#user_name").attr('scr', nombre);
-    $("#user_email").attr('scr', email);
+    $("#user_photoURL").attr('src', foto);
+    $("#user_name").html(nombre);
+    $("#user_email").html(email);
    }
     
     
