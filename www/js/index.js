@@ -74,10 +74,10 @@ connectedRef.on("value", function(snap) {
 
 function traer_categorias(){
     $("#first_time_home").hide();
-    $("#second_time_home").show();
     var subcategorias = JSON.parse(window.localStorage.getItem("bancarrota_subcategorias"));
     var posicion = 0;
-    if (subcategorias.length > 0){
+    if (subcategorias !== null){
+        $("#second_time_home").show();
         $("#insert").html("");
         $.each(subcategorias, function(index, val) {
             if (val.acceso_rapido == 1){
@@ -86,7 +86,8 @@ function traer_categorias(){
             }
         }); 
     } else {
-        $("#insert").append('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
+        $("#third_time_home").show();
+        $("#msg_error").append('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
     }
 }
 
@@ -102,7 +103,9 @@ function traer_todas_categorias(){
                 ++posicion;
         }); 
     } else {
+        sincronizar_subcategorias();
         $("#insert").append('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
+
     }
 }
 
@@ -139,7 +142,7 @@ function (error) {
 {
           "preferFrontCamera" : false, // iOS and Android
           "showFlipCameraButton" : true, // iOS and Android
-          "prompt" : "Escanea el codigo de barras del sitio", // supported on Android only
+          "prompt" : "Escanea el codigo QR en tu sitio", // supported on Android only
           "formats" : "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
           "orientation" : "portrait" // Android only (portrait|landscape), default unset so it rotates with the device
       }
@@ -174,13 +177,12 @@ $(function(){
     $('.collapsible').collapsible();
 
     $('.button-collapse').sideNav({
-          menuWidth: 400, // Default is 300
+          menuWidth: 200, // Default is 300
           closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
           draggable: true, // Choose whether you can drag to open on touch screens,
         }
       );
     $(".button-collapse").sideNav();
-    $('.button-collapse').sideNav('show');
 
    var google_id = window.localStorage.getItem("bancarrota_google_id");
    db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).on('value', function(snapshot) {
@@ -276,4 +278,9 @@ $('#insert').on('click', 'li', function(e){
     var cantidad = (posicionscroll * 250);
     console.log(cantidad);
     //$("html, body").animate({ scrollTop: cantidad }, 600);
+});
+
+$("#recargar").on('click', function(event) {
+    event.preventDefault();
+    window.location.reload();
 });

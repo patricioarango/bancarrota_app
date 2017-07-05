@@ -52,7 +52,7 @@
             <li>
                 <div class="user-view">
                     <div class="background">
-                        <img class="img-responsive" src="img/google-now-wallpaper-1.png" style="width:400px;">
+                        <img class="img-responsive" src="img/google-now-wallpaper-1.png" style="width:200px;">
                     </div>
                     <img class="circle" id="user_photoURL" src="">
                 <a href="#!name"><span id="user_name" class="white-text name"></span></a>
@@ -72,10 +72,10 @@
           </div>  
           <div class="col s12" style="padding:10px;"></div> 
             <div class="col s6 valign-wrapper"> 
-              <i class="material-icons">publish</i> <span id="enviadas">45</span> enviadas
+              <i class="material-icons">publish</i> <span id="enviadas">0</span> enviadas
               </div>
             <div class="col s6 valign-wrapper">  
-              <i class="material-icons">trending_up</i> <span id="para_sincronizar">45</span> para sincronizar
+              <i class="material-icons">trending_up</i> <span id="para_sincronizar">0</span> para sincronizar
             </div>  
           <div class="col s12" style="padding:10px;"></div>  
         </div>    
@@ -84,6 +84,16 @@
 
     </ul>
     </div>
+    </section>
+    <section id="third_time_home" style="display:none;">
+        <div class="row">
+            <p><span id="msg_error"></span>
+            <div class="col s6 offset-s3">
+                <button id="recargar" class="btn waves-effect waves-light teal z-depth-4">Reload
+                    <i class="material-icons right">send</i>
+                </button>                
+            </div>
+        </div>
     </section>
     <script type="text/javascript" src="cordova.js"></script>
 <script src="js/jquery-3.2.1.min.js"></script>
