@@ -111,7 +111,12 @@ function traer_todas_categorias(){
 
 function insertar_categoria_en_vista(posicion,categoria){
         var colors = ["light-blue lighten-1","blue lighten-1","light-blue","blue","light-blue darken-1","blue darken-1","light-blue darken-2","blue darken-2","light-blue darken-3","blue darken-3","light-blue darken-4","blue darken-4","indigo darken-4","indigo lighten-1","indigo","indigo darken-1","indigo darken-2","indigo darken-3","indigo darken-4","deep-purple darken-4","light-blue accent-1","light-blue accent-2","light-blue accent-3","light-blue accent-4","blue accent-1","blue accent-2","blue accent-3","blue accent-4","indigo accent-1","indigo accent-2","indigo accent-3","indigo accent-4","deep-purple accent-1","deep-purple accent-2","deep-purple accent-3","deep-purple accent-4","cyan accent-1","cyan accent-2","cyan accent-3","cyan accent-4","teal accent-1","teal accent-2","teal accent-3","teal accent-4","green accent-1","green accent-2","green accent-3","green accent-4","light-green accent-1","light-green accent-2","light-green accent-3","light-green accent-4","orange accent-1","orange accent-2","orange accent-3","orange accent-4"];
-            $("#insert").append('<li data-posicionscroll="'+posicion+'" class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s7 offset-s2"><i class="material-icons large">'+categoria.icono+'</i>'+categoria.subcategoria+'</div></div>'+
+            if (categoria.emoji != ""){
+                var icono = categoria.emoji;
+            } else {
+                var icono = categoria.icono;
+            }
+            $("#insert").append('<li data-posicionscroll="'+posicion+'" class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s7 offset-s2"><i class="material-icons large">'+icono+'</i>'+categoria.subcategoria+'</div></div>'+
                 '<div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
                 '<input type="number" class="white-text" name="importe" placeholder="importe" id="importe_'+categoria.id_subcategoria+'" style="border-bottom:1px solid white;">'+
                 '<input type="text" class="white-text" name="observacion" placeholder="observacion" id="observacion_'+categoria.id_subcategoria+'" style="border-bottom:1px solid white;">'+
