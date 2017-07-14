@@ -116,7 +116,7 @@ function insertar_categoria_en_vista(posicion,categoria){
             } else {
                 var icono = categoria.icono;
             }
-            $("#insert").append('<li data-posicionscroll="'+posicion+'" class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s7 offset-s2"><i class="material-icons large">'+icono+'</i>'+categoria.subcategoria+'</div></div>'+
+            $("#insert").append('<li data-completa="'+categoria+'" data-posicionscroll="'+posicion+'" class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s7 offset-s2"><i class="material-icons large">'+icono+'</i>'+categoria.subcategoria+'</div></div>'+
                 '<div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
                 '<input type="number" class="white-text" name="importe" placeholder="importe" id="importe_'+categoria.id_subcategoria+'" style="border-bottom:1px solid white;">'+
                 '<input type="text" class="white-text" name="observacion" placeholder="observacion" id="observacion_'+categoria.id_subcategoria+'" style="border-bottom:1px solid white;">'+
