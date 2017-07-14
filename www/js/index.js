@@ -116,7 +116,7 @@ function insertar_categoria_en_vista(posicion,categoria){
             } else {
                 var icono = categoria.icono;
             }
-            $("#insert").append('<li data-completa="'+categoria+'" data-posicionscroll="'+posicion+'" class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s7 offset-s2"><i class="material-icons large">'+icono+'</i>'+categoria.subcategoria+'</div></div>'+
+            $("#insert").append('<li data-datos_completos="'+categoria+'" data-posicionscroll="'+posicion+'" class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s7 offset-s2"><i class="material-icons large">'+icono+'</i>'+categoria.subcategoria+'</div></div>'+
                 '<div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
                 '<input type="number" class="white-text" name="importe" placeholder="importe" id="importe_'+categoria.id_subcategoria+'" style="border-bottom:1px solid white;">'+
                 '<input type="text" class="white-text" name="observacion" placeholder="observacion" id="observacion_'+categoria.id_subcategoria+'" style="border-bottom:1px solid white;">'+
@@ -216,8 +216,9 @@ $(document).on('click',".enviar_transaccion", function(event) {
     var posicion = $(this).data("posicion");
     var importe = $("#importe_" + id).val();
     var observacion = $("#observacion_" + id).val();
+    var datos_completos = $(this).data("datos_completos");
     var id_transaccion = get_transaccion();
-    guardar_transaccion(id_transaccion,importe,id,observacion);
+    guardar_transaccion(id_transaccion,importe,id,observacion,datos_completos);
     limpiar_transaccion(id,posicion);
     if (conexion){
       sincronizar_transacciones();
@@ -235,10 +236,13 @@ function get_transaccion(){
     return nuevo_id_transaccion;
 }
 
-function guardar_transaccion(id_transaccion,importe,id_subcategoria,observacion){
+function guardar_transaccion(id_transaccion,importe,id_subcategoria,observacion,datos_completos){
     localStorage.setItem("bancarrota_id_subcategoria_" + id_transaccion,id_subcategoria); 
     localStorage.setItem("bancarrota_importe_" + id_transaccion,importe); 
     localStorage.setItem("bancarrota_observacion_" + id_transaccion,observacion); 
+    localStorage.setItem("bancarrota_subcategoria_" + id_transaccion,datos_completos.subcategoria); 
+    localStorage.setItem("bancarrota_categoria_" + id_transaccion,datos_completos.categoria); 
+    localStorage.setItem("bancarrota_id_ategoria_" + id_transaccion,datos_completos.id_categoria); 
 }
 
 function limpiar_transaccion(id_subcategoria,posicion){
@@ -255,12 +259,18 @@ function sincronizar_transacciones(){
                 importe: localStorage.getItem("bancarrota_importe_" + i),
                 id_subcategoria: localStorage.getItem("bancarrota_id_subcategoria_" + i),
                 observacion: localStorage.getItem("bancarrota_observacion_" + i),
+                subcategoria: localStorage.getItem("bancarrota_subcategoria_" + i); 
+                categoria: localStorage.getItem("bancarrota_categoria_" + i); 
+                id_categoria: localStorage.getItem("bancarrota_id_ategoria_" + i);                 
                 google_id: localStorage.getItem("bancarrota_google_id"),
                 fecha: firebase.database.ServerValue.TIMESTAMP
             });
             localStorage.removeItem("bancarrota_importe_" + i);
             localStorage.removeItem("bancarrota_id_subcategoria_" + i);
             localStorage.removeItem("bancarrota_observacion_" + i),
+            localStorage.removeItem("bancarrota_categoria_" + i); 
+            localStorage.removeItem("bancarrota_subcategoria_" + i); 
+            localStorage.removeItem("bancarrota_id_categoria_" + i); 
             localStorage.removeItem("id_transaccion");
         }
     }
