@@ -45,7 +45,7 @@
         }
     }
 };
-var colors = ["red","pink","blue","purple","deep-purple","indigo","cyan","teal","light-blue","green","light-green","lime","yellow","orange","amber","deep-orange","brown"];
+
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyD2PzScF-ihOBqL6hF3U5dDaUL6qo-pSPg",
@@ -120,7 +120,6 @@ function insertar_categoria_en_vista(posicion,categoria){
                 '<div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
                 '<input type="number" class="white-text" name="importe" placeholder="importe" id="importe_'+categoria.id_subcategoria+'" style="border-bottom:1px solid white;">'+
                 '<input type="text" class="white-text" name="observacion" placeholder="observacion" id="observacion_'+categoria.id_subcategoria+'" style="border-bottom:1px solid white;">'+
-                '<input type="hidden" name="id_subcategoria_2" value="'+categoria.id_subcategoria+'">'+
                 '<button style="margin-top:20px;" class="btn btn-floating btn-large pink pulse enviar_transaccion right" data-posicion="'+posicion+'" value="'+categoria.id_subcategoria+'"><i class="material-icons">send</i></button>'+
                 '</div></li>');        
 }
@@ -242,7 +241,7 @@ function guardar_transaccion(id_transaccion,importe,id_subcategoria,observacion,
     localStorage.setItem("bancarrota_observacion_" + id_transaccion,observacion); 
     localStorage.setItem("bancarrota_subcategoria_" + id_transaccion,datos_completos.subcategoria); 
     localStorage.setItem("bancarrota_categoria_" + id_transaccion,datos_completos.categoria); 
-    localStorage.setItem("bancarrota_id_ategoria_" + id_transaccion,datos_completos.id_categoria); 
+    localStorage.setItem("bancarrota_id_categoria_" + id_transaccion,datos_completos.id_categoria); 
 }
 
 function limpiar_transaccion(id_subcategoria,posicion){
@@ -259,9 +258,9 @@ function sincronizar_transacciones(){
                 importe: localStorage.getItem("bancarrota_importe_" + i),
                 id_subcategoria: localStorage.getItem("bancarrota_id_subcategoria_" + i),
                 observacion: localStorage.getItem("bancarrota_observacion_" + i),
-                subcategoria: localStorage.getItem("bancarrota_subcategoria_" + i); 
-                categoria: localStorage.getItem("bancarrota_categoria_" + i); 
-                id_categoria: localStorage.getItem("bancarrota_id_ategoria_" + i);                 
+                subcategoria: localStorage.getItem("bancarrota_subcategoria_" + i), 
+                categoria: localStorage.getItem("bancarrota_categoria_" + i), 
+                id_categoria: localStorage.getItem("bancarrota_id_categoria_" + i),
                 google_id: localStorage.getItem("bancarrota_google_id"),
                 fecha: firebase.database.ServerValue.TIMESTAMP
             });
