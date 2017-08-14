@@ -319,7 +319,7 @@ function traer_transacciones_a_sincronizar(google_id){
             html += '<tr>'+
                 '<td>'+transacciones[key].subcategoria+'</td>'+
                 '<td>'+transacciones[key].observacion+'</td>'+
-                '<td>'+transacciones[key].precio+'</td>'+
+                '<td>'+transacciones[key].importe+'</td>'+
                 '<td>'+new Date(transacciones[key].fecha)+'</td>';
         });
     html += "</tbody></table>";
