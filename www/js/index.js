@@ -302,6 +302,7 @@ function traer_transacciones_a_sincronizar(google_id){
   console.log("traer_transacciones_a_sincronizar");
   db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).on('value', function(snapshot) {
     var transacciones = snapshot.val();
+    console.log(transacciones);
     if (transacciones != null){
       var html = "";
       $.each(transacciones, function(key, transaccion) {
