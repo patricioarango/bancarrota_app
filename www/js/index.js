@@ -302,7 +302,7 @@ function mostrar_nav_and_menu(){
 function mostrar_container_categorias(){
     limpiar_vista();
     mostrar_nav_and_menu();
-    $("#first_time_home").html('<div id="categorias_container" class="row">'+
+    $("#first_time_home").append('<div id="categorias_container" class="row">'+
             '<ul id="insert" class="collapsible" data-collapsible="accordion" style="margin-top:0;">'+
             '</ul>'+
         '</div>');  
