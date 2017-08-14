@@ -317,10 +317,10 @@ function traer_transacciones_a_sincronizar(google_id){
         '<tbody>';
       $.each(transacciones, function(key, transaccion) {
        html += '<tr>'+
-                '<td>'+transaccion.subcategoria+'</td>'+
-                '<td>'+transaccion.observacion+'</td>'+
-                '<td>'+transaccion.precio+'</td>'+
-                '<td>'+new Date(transaccion.fecha)+'</td>'+
+                '<td>'+transacciones.subcategoria+'</td>'+
+                '<td>'+transacciones.observacion+'</td>'+
+                '<td>'+transacciones.precio+'</td>'+
+                '<td>'+new Date(transacciones.fecha)+'</td>'+
        /*$.each(transaccion, function(index, val) {
         if (index == "fecha"){
           val = new Date(val);
