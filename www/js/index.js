@@ -38,7 +38,7 @@
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         if (localStorage.getItem("bancarrota_registrado") === null) {
-            $("#first_time_home").show();
+            mostrar_login();
         } else {
             console.log("logueado");
             traer_categorias();
@@ -73,45 +73,46 @@ connectedRef.on("value", function(snap) {
 });
 
 function traer_categorias(){
-    $("#first_time_home").hide();
+    mostrar_container_categorias();
     var subcategorias = JSON.parse(window.localStorage.getItem("bancarrota_subcategorias"));
     var posicion = 0;
     if (subcategorias !== null){
-        $("#second_time_home").show();
-        $("#insert").html("");
+        $("#first_time_home").append('<div id="categorias_container" class="row">'+
+            '<ul id="insert" class="collapsible" data-collapsible="accordion" style="margin-top:0;">');
         $.each(subcategorias, function(index, val) {
             if (val.acceso_rapido == 1){
                 insertar_categoria_en_vista(posicion,val);
                 ++posicion;
             }
         }); 
+        $("#first_time_home").append('</ul></div>');
     } else {
-        $("#third_time_home").show();
-        $("#third_time_home").append('<div class="row">'+
+        var error_string = '<div class="row">'+
             '<p><span id="msg_error"><p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p></span>'+
             '<div class="col s6 offset-s3">'+
                 '<button id="recargar" class="btn waves-effect waves-light teal z-depth-4">Reload '+'<i class="material-icons right">send</i>'+
                 '</button>'+           
             '</div>'+
-        '</div>');
+        '</div>';
+        show_error_vista(error_string);    
     }
 }
 
 function traer_todas_categorias(){
-    $("#first_time_home").hide();
-    $("#second_time_home").show();
+    mostrar_container_categorias();
     var subcategorias = JSON.parse(window.localStorage.getItem("bancarrota_subcategorias"));
     var posicion = 0;
     if (subcategorias.length > 0){
-        $("#insert").html("");
+        $("#first_time_home").append('<div id="categorias_container" class="row">'+
+            '<ul id="insert" class="collapsible" data-collapsible="accordion" style="margin-top:0;">');
         $.each(subcategorias, function(index, val) {
                 insertar_categoria_en_vista(posicion,val);
                 ++posicion;
         }); 
+        $("#first_time_home").append('</ul></div>');
     } else {
         sincronizar_subcategorias();
-        $("#insert").append('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
-
+        show_error_vista('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
     }
 }
 
@@ -306,3 +307,36 @@ function mostrar_transacciones_en_cola(){
 
 }
 
+function mostrar_login(){
+            limpiar_vista();
+            $("#first_time_home").append('<h1 class="pacifico white-text center">Bancarrota</h1>'+
+        '<h5 class="oswald white-text center" style="margin-top:-1.3em">handle your money with care</h5>'+
+        '<div class="row">'+
+            '<div class="center" style="margin-top:30px;"> '+
+                '<button id="escanear" class="btn waves-effect waves-light pink z-depth-4" name="action">One Time Log In'+
+                    '<i class="material-icons right">send</i>'+
+                '</button>'+
+            '</div>'+
+        '</div>'+
+        '<video class="fullscreen" src="gifv_1449740173_gifv.mp4" autoplay loop />').show('slow');
+}
+
+function limpiar_vista(){
+    $("#first_time_home").html("");
+    $("#first_time_home").hide();
+}
+
+function mostrar_nav_and_menu(){
+    var nav_and_menu = $("#nav_and_menu").html();
+    $("#first_time_home").append(nav_and_menu).show('slow');
+}
+
+function mostrar_container_categorias(){
+    limpiar_vista();
+    mostrar_nav_and_menu();
+}
+
+function show_error_vista(error){
+    limpiar_vista();
+    $("#first_time_home").append(error).show('slow');    
+}
