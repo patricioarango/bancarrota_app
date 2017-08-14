@@ -305,16 +305,30 @@ function traer_transacciones_a_sincronizar(google_id){
     console.log(transacciones);
     if (transacciones != null){
       var html = "";
+    html += '<table class="centered">'+
+        '<thead>'+
+          '<tr>'+
+              '<th>Subcategoria</th>'+
+              '<th>Observaci&oacute;n</th>'+
+              '<th>Precio</th>'+
+              '<th>Fecha</th>'+
+          '</tr>'+
+        '</thead>'+
+        '<tbody>';
       $.each(transacciones, function(key, transaccion) {
-       html += "<ul>";
-       $.each(transaccion, function(index, val) {
+       html += '<tr>'+
+                '<td>'+transaccion.subcategoria+'</td>'+
+                '<td>'+transaccion.observacion+'</td>'+
+                '<td>'+transaccion.precio+'</td>'+
+                '<td>'+new Date(transaccion.fecha)+'</td>'+
+       /*$.each(transaccion, function(index, val) {
         if (index == "fecha"){
           val = new Date(val);
         }
         html += "<li>" + index + ": "+ val + "</li>";
-      });
-       html += "</ul>";
+      });*/
      });
+    html += "</tbody></table>";
       $("#listado").html(html);
     } else {
       $("#listado").text("No hay transacciones pendientes");
