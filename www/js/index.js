@@ -248,7 +248,7 @@ function calcular_para_sincronizar(){
         }
 }    
 
-$('#insert').on('click', 'li', function(e){
+$(document).on('click', 'li', function(e){
     e.preventDefault();
     var posicionscroll = $(this).data("posicionscroll");
     var cantidad = (posicionscroll * 250);
@@ -256,7 +256,7 @@ $('#insert').on('click', 'li', function(e){
     //$("html, body").animate({ scrollTop: cantidad }, 600);
 });
 
-$("#recargar").on('click', function(event) {
+$(document).on('click','#recargar', function(event) {
     event.preventDefault();
     window.location.reload();
 });
@@ -293,6 +293,12 @@ function limpiar_vista(){
 function mostrar_nav_and_menu(){
     var nav_and_menu = $("#nav_and_menu").html();
     $("#first_time_home").append(nav_and_menu).show('slow');
+    $('.mostrar_nav').sideNav({
+          menuWidth: 250, // Default is 300
+          closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+          draggable: true, // Choose whether you can drag to open on touch screens,
+        }
+      );    
 }
 
 function mostrar_container_categorias(){
@@ -308,13 +314,6 @@ function show_error_vista(error){
 
 $(function(){
     $('.collapsible').collapsible();
-
-    $('.mostrar_nav').sideNav({
-          menuWidth: 250, // Default is 300
-          closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-          draggable: true, // Choose whether you can drag to open on touch screens,
-        }
-      );
 
    var google_id = window.localStorage.getItem("bancarrota_google_id");
    db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).on('value', function(snapshot) {

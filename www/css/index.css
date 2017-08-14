@@ -71,6 +71,6 @@
   transform: translate(-50%, -50%);
 }
 
-#second_time_home{
+#first_time_home,#second_time_home{
   font-family: 'Raleway', sans-serif;
 }
