@@ -344,6 +344,36 @@ function show_error_vista(error){
   $("#listado").append(error);
 }
 
+function mostrar_balance(){
+    limpiar_categorias();
+    $("#listado").html(  '<div class="row cursiva flow-text blue-text text-accent-4">'+
+        '<div class="row">'+
+          '<div class="col s8 m4 offset-m4 offset-s2">'+
+           '4545454 (ingresos)'+
+          '</div>'+
+        '</div>'+
+        '<div class="row">'+
+          '<div class="col s1 offset-m3">-</div>'+
+        '</div>'+
+        '<div class="row">'+
+          '<div class="col s12 m8 offset-m4 offset-s2">'+
+            '200 (gastos estimados) // los posta son 2.350'+
+          '</div> '+
+        '</div>'+
+        '<div class="row">'+
+          '<div class="col s12 m6 offset-m2">'+
+            '<div class="divider"></div>'+
+          '</div>'+
+        '</div>'+
+        '<div class="row">'+
+          '<div class="col s8 offset-m4 offset-s2">'+
+          '$ 200 queda pa&#8217 gastar'+
+          '</div> '+
+        '</div>'+
+      '</div>');
+}
+
+
 $(function(){
 
    var google_id = window.localStorage.getItem("bancarrota_google_id");
