@@ -165,7 +165,6 @@ function codigo_escaneado(qrcode){
     window.localStorage.setItem("bancarrota_site_url",datos[4]);
     window.localStorage.setItem("bancarrota_registrado",1);
     sincronizar_subcategorias();
-    traer_categorias();
 }
 
 function sincronizar_subcategorias(){
@@ -174,8 +173,9 @@ function sincronizar_subcategorias(){
     if (google_id != null){
         db.ref('/bancarrota/'+google_id+'/subcategorias').on('value', function(snapshot) {
             window.localStorage.setItem("bancarrota_subcategorias",JSON.stringify(snapshot.val()));
+            traer_categorias();
         });
-    }    
+    }
 }
 
 $(document).on('click',".enviar_transaccion", function(event) {
@@ -285,9 +285,7 @@ function mostrar_login(){
 
 function limpiar_vista(){
     $("#first_time_home").html("");
-    $("#categorias_container #insert").html("");
     $("#first_time_home").hide();
-    $("#categorias_container").hide();
 }
 
 function mostrar_nav_and_menu(){
@@ -304,7 +302,12 @@ function mostrar_nav_and_menu(){
 function mostrar_container_categorias(){
     limpiar_vista();
     mostrar_nav_and_menu();
-    $("#categorias_container").show();
+    $("#first_time_home").html('<div id="categorias_container" class="row">
+            <ul id="insert" class="collapsible" data-collapsible="accordion" style="margin-top:0;">
+
+            </ul>
+        </div>');  
+    $('.collapsible').collapsible();
 }
 
 function show_error_vista(error){
@@ -313,7 +316,6 @@ function show_error_vista(error){
 }
 
 $(function(){
-    $('.collapsible').collapsible();
 
    var google_id = window.localStorage.getItem("bancarrota_google_id");
    db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).on('value', function(snapshot) {
@@ -333,6 +335,5 @@ $(function(){
     $("#user_name").html(nombre);
     $("#user_email").html(email);
    }
-    
     
 });
