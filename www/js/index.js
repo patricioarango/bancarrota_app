@@ -77,15 +77,12 @@ function traer_categorias(){
     var subcategorias = JSON.parse(window.localStorage.getItem("bancarrota_subcategorias"));
     var posicion = 0;
     if (subcategorias !== null){
-        $("#first_time_home").append('<div id="categorias_container" class="row">'+
-            '<ul id="insert" class="collapsible" data-collapsible="accordion" style="margin-top:0;">');
         $.each(subcategorias, function(index, val) {
             if (val.acceso_rapido == 1){
                 insertar_categoria_en_vista(posicion,val);
                 ++posicion;
             }
         }); 
-        $("#first_time_home").append('</ul></div>');
     } else {
         var error_string = '<div class="row">'+
             '<p><span id="msg_error"><p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p></span>'+
@@ -103,13 +100,10 @@ function traer_todas_categorias(){
     var subcategorias = JSON.parse(window.localStorage.getItem("bancarrota_subcategorias"));
     var posicion = 0;
     if (subcategorias.length > 0){
-        $("#first_time_home").append('<div id="categorias_container" class="row">'+
-            '<ul id="insert" class="collapsible" data-collapsible="accordion" style="margin-top:0;">');
         $.each(subcategorias, function(index, val) {
                 insertar_categoria_en_vista(posicion,val);
                 ++posicion;
         }); 
-        $("#first_time_home").append('</ul></div>');
     } else {
         sincronizar_subcategorias();
         show_error_vista('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
@@ -183,38 +177,6 @@ function sincronizar_subcategorias(){
         });
     }    
 }
-
-$(function(){
-    $('.collapsible').collapsible();
-
-    $('.mostrar_nav').sideNav({
-          menuWidth: 250, // Default is 300
-          closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-          draggable: true, // Choose whether you can drag to open on touch screens,
-        }
-      );
-
-   var google_id = window.localStorage.getItem("bancarrota_google_id");
-   db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).on('value', function(snapshot) {
-      var transacciones = snapshot.val();
-        if (transacciones == null){
-            $("#enviadas").text("0 ");        
-        } else {
-            $("#enviadas").text(Object.keys(transacciones).length + " ");
-        }
-    });  
-
-   if (window.localStorage.getItem("bancarrota_registrado") == 1){
-    var nombre = window.localStorage.getItem("bancarrota_nombre");
-    var email = window.localStorage.getItem("bancarrota_email");
-    var foto = window.localStorage.getItem("bancarrota_photoURL");
-    $("#user_photoURL").attr('src', foto);
-    $("#user_name").html(nombre);
-    $("#user_email").html(email);
-   }
-    
-    
-});
 
 $(document).on('click',".enviar_transaccion", function(event) {
     event.preventDefault();
@@ -323,7 +285,9 @@ function mostrar_login(){
 
 function limpiar_vista(){
     $("#first_time_home").html("");
+    $("#categorias_container").html("");
     $("#first_time_home").hide();
+    $("#categorias_container").hide();
 }
 
 function mostrar_nav_and_menu(){
@@ -334,9 +298,42 @@ function mostrar_nav_and_menu(){
 function mostrar_container_categorias(){
     limpiar_vista();
     mostrar_nav_and_menu();
+    $("#categorias_container").show();
 }
 
 function show_error_vista(error){
     limpiar_vista();
     $("#first_time_home").append(error).show('slow');    
 }
+
+$(function(){
+    $('.collapsible').collapsible();
+
+    $('.mostrar_nav').sideNav({
+          menuWidth: 250, // Default is 300
+          closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+          draggable: true, // Choose whether you can drag to open on touch screens,
+        }
+      );
+
+   var google_id = window.localStorage.getItem("bancarrota_google_id");
+   db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).on('value', function(snapshot) {
+      var transacciones = snapshot.val();
+        if (transacciones == null){
+            $("#enviadas").text("0 ");        
+        } else {
+            $("#enviadas").text(Object.keys(transacciones).length + " ");
+        }
+    });  
+
+   if (window.localStorage.getItem("bancarrota_registrado") == 1){
+    var nombre = window.localStorage.getItem("bancarrota_nombre");
+    var email = window.localStorage.getItem("bancarrota_email");
+    var foto = window.localStorage.getItem("bancarrota_photoURL");
+    $("#user_photoURL").attr('src', foto);
+    $("#user_name").html(nombre);
+    $("#user_email").html(email);
+   }
+    
+    
+});
