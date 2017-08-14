@@ -317,10 +317,10 @@ function traer_transacciones_a_sincronizar(google_id){
         '<tbody>';
         $.each(transacciones, function(key, transaccion) {
             html += '<tr>'+
-                '<td>'+transacciones.subcategoria+'</td>'+
-                '<td>'+transacciones.observacion+'</td>'+
-                '<td>'+transacciones.precio+'</td>'+
-                '<td>'+new Date(transacciones.fecha)+'</td>';
+                '<td>'+transacciones[key].subcategoria+'</td>'+
+                '<td>'+transacciones[key].observacion+'</td>'+
+                '<td>'+transacciones[key].precio+'</td>'+
+                '<td>'+new Date(transacciones[key].fecha)+'</td>';
         });
     html += "</tbody></table>";
       $("#listado").html(html);
