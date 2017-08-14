@@ -270,48 +270,15 @@ function mostrar_transacciones_en_cola(){
 }
 
 function mostrar_login(){
-            limpiar_vista();
-            $("#first_time_home").append('<h1 class="pacifico white-text center">Bancarrota</h1>'+
-        '<h5 class="oswald white-text center" style="margin-top:-1.3em">handle your money with care</h5>'+
-        '<div class="row">'+
-            '<div class="center" style="margin-top:30px;"> '+
-                '<button id="escanear" class="btn waves-effect waves-light pink z-depth-4" name="action">One Time Log In'+
-                    '<i class="material-icons right">send</i>'+
-                '</button>'+
-            '</div>'+
-        '</div>'+
-        '<video class="fullscreen" src="gifv_1449740173_gifv.mp4" autoplay loop />').show('slow');
-}
-
-function limpiar_vista(){
-    $("#first_time_home").html("");
-    $("#first_time_home").hide();
-}
-
-function mostrar_nav_and_menu(){
-    var nav_and_menu = $("#nav_and_menu").html();
-    $("#first_time_home").append(nav_and_menu).show('slow');
-    $('.mostrar_nav').sideNav({
-          menuWidth: 250, // Default is 300
-          closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-          draggable: true, // Choose whether you can drag to open on touch screens,
-        }
-      );    
+    $("#login_contenedor").show();
 }
 
 function mostrar_container_categorias(){
-    limpiar_vista();
-    mostrar_nav_and_menu();
-    $("#first_time_home").append('<div id="categorias_container" class="row">'+
-            '<ul id="insert" class="collapsible" data-collapsible="accordion" style="margin-top:0;">'+
-            '</ul>'+
-        '</div>');  
-    $('.collapsible').collapsible();
+ 
 }
 
 function show_error_vista(error){
-    limpiar_vista();
-    $("#first_time_home").append(error).show('slow');    
+
 }
 
 $(function(){
@@ -340,5 +307,7 @@ $(function(){
           closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
           draggable: true, // Choose whether you can drag to open on touch screens,
         }
-      );      
+    );
+
+    $('.collapsible').collapsible();          
 });

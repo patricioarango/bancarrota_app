@@ -35,11 +35,19 @@
 </head>
 
 <body>
-    <section id="first_time_home" style="display:block;">
-
-
+    <section id="login_contenedor" style="display:none;">
+        <h1 class="pacifico white-text center">Bancarrota</h1>
+        <h5 class="oswald white-text center" style="margin-top:-1.3em">handle your money with care</h5>
+        <div class="row">
+            <div class="center" style="margin-top:30px;"> 
+                <button id="escanear" class="btn waves-effect waves-light pink z-depth-4" name="action">One Time Log In
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
+        <video class="fullscreen" src="gifv_1449740173_gifv.mp4" autoplay loop />        
     </section>
-    <div id="nav_and_menu" style="visibility:hidden;">
+    <section id="first_time_home" style="display:none;">
         <ul id="slide-out" class="side-nav">
             <li>
                 <div class="user-view">
@@ -47,8 +55,8 @@
                         <img class="img-responsive" src="img/google-now-wallpaper-1.png" style="width:250px;">
                     </div>
                     <img class="circle" id="user_photoURL" src="">
-                <a href="#!name"><span id="user_name" class="white-text name"></span></a>
-                <a href="#!email"><span id="user_email" class="white-text email"></span></a>
+                    <a href="#!name"><span id="user_name" class="white-text name"></span></a>
+                    <a href="#!email"><span id="user_email" class="white-text email"></span></a>
                 </div>
             </li>
             <li><a href="#" onclick="traer_categorias();"><i class="material-icons">flash_on</i>R&aacute;pido</a></li>
@@ -66,18 +74,23 @@
         <div class="row teal accent-4 white-text" style="margin-bottom:0;">
           <div class="col s12 valign-wrapper mostrar_nav" data-activates="slide-out" style="padding:20px;">
             <i class="material-icons">menu</i> &nbsp;MENU
-          </div>  
-          <div class="col s12" style="padding:10px;"></div> 
-            <div class="col s6 valign-wrapper"> 
-              <i class="material-icons">publish</i> <span id="enviadas">0</span> enviadas
-              </div>
-            <div class="col s6 valign-wrapper">  
-              <i class="material-icons">trending_up</i> <span id="para_sincronizar">0</span> para sincronizar
-            </div>  
-          <div class="col s12" style="padding:10px;"></div>  
-        </div>
-    </div>       
-    <script type="text/javascript" src="cordova.js"></script>
+        </div>  
+        <div class="col s12" style="padding:10px;"></div> 
+        <div class="col s6 valign-wrapper"> 
+          <i class="material-icons">publish</i> <span id="enviadas">0</span> enviadas
+      </div>
+      <div class="col s6 valign-wrapper">  
+          <i class="material-icons">trending_up</i> <span id="para_sincronizar">0</span> para sincronizar
+      </div>  
+      <div class="col s12" style="padding:10px;"></div>  
+  </div>
+    <div id="categorias_container" class="row">
+            <ul id="insert" class="collapsible" data-collapsible="accordion" style="margin-top:0;">
+            </ul>
+    </div>
+    <div class="listado"></div>
+</section>
+<script type="text/javascript" src="cordova.js"></script>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="materialize/js/materialize.min.js"></script>
 
@@ -87,10 +100,10 @@
 <script>
 
 </script>    
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
-    </script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript">
+    app.initialize();
+</script>
 </body>
 
 </html>
