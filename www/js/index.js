@@ -260,13 +260,13 @@ function calcular_para_sincronizar(){
         }
 }    
 
-$("#insert").on('click', 'li', function(e){
+/*$("#insert").on('click', 'li', function(e){
     e.preventDefault();
     var posicionscroll = $(this).data("posicionscroll");
     var cantidad = (posicionscroll * 250);
-    console.log(cantidad);
+    //console.log(cantidad);
     //$("html, body").animate({ scrollTop: cantidad }, 600);
-});
+});*/
 
 $(document).on('click','#recargar', function(event) {
     event.preventDefault();
@@ -274,12 +274,52 @@ $(document).on('click','#recargar', function(event) {
 });
 
 function mostrar_transacciones_enviadas(){
-
+    limpiar_categorias();
+    var google_id = window.localStorage.getItem("bancarrota_google_id");
+    traer_transacciones_a_sincronizar(google_id);
 }
 
 function mostrar_transacciones_en_cola(){
-
+    limpiar_categorias();
+    var id_transaccion = parseInt(localStorage.getItem("id_transaccion"));
+    if (id_transaccion > 0) {
+        var html = "";
+        html += "<ul>";
+        for (i = 1; i<=id_transaccion; i++){
+            html += "<li>importe: "+ localStorage.getItem("bancarrota_importe_" + i) + "</li>";
+            html += "<li>id_subcategoria: "+ localStorage.getItem("bancarrota_id_subcategoria_" + i) + "</li>";
+            html += "<li>observacion: "+ localStorage.getItem("bancarrota_observacion_" + i) + "</li>";
+            html += "<li>subcategoria: "+ localStorage.getItem("bancarrota_subcategoria_" + i) + "</li>";
+        }
+        html += "</ul>";
+        $("#listado").html(html);
+    } else {
+      $("#listado").text("No hay transacciones pendientes");
+    }   
 }
+
+function traer_transacciones_a_sincronizar(google_id){
+  console.log("traer_transacciones_a_sincronizar");
+  db.ref('/bancarrota/transacciones/no_procesadas').orderByChild('google_id').equalTo(google_id).on('value', function(snapshot) {
+    var transacciones = snapshot.val();
+    if (transacciones != null){
+      var html = "";
+      $.each(transacciones, function(key, transaccion) {
+       html += "<ul>";
+       $.each(transaccion, function(index, val) {
+        if (index == "fecha"){
+          val = new Date(val);
+        }
+        html += "<li>" + index + ": "+ val + "</li>";
+      });
+       html += "</ul>";
+     });
+      $("#listado").html(html);
+    } else {
+      $("#listado").text("No hay transacciones pendientes");
+    }
+  });  
+} 
 
 function mostrar_login(){
     $("#login_contenedor").show();
@@ -287,6 +327,7 @@ function mostrar_login(){
 
 function limpiar_categorias(){
     $("#insert").empty();
+    $("#listado").empty();
 }
 
 function show_error_vista(error){
