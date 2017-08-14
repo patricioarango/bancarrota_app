@@ -87,7 +87,13 @@ function traer_categorias(){
         }); 
     } else {
         $("#third_time_home").show();
-        $("#msg_error").append('<p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p>');
+        $("#third_time_home").append('<div class="row">'+
+            '<p><span id="msg_error"><p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p></span>'+
+            '<div class="col s6 offset-s3">'+
+                '<button id="recargar" class="btn waves-effect waves-light teal z-depth-4">Reload '+'<i class="material-icons right">send</i>'+
+                '</button>'+           
+            '</div>'+
+        '</div>');
     }
 }
 
@@ -291,3 +297,12 @@ $("#recargar").on('click', function(event) {
     event.preventDefault();
     window.location.reload();
 });
+
+function mostrar_transacciones_enviadas(){
+
+}
+
+function mostrar_transacciones_en_cola(){
+
+}
+

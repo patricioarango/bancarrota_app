@@ -64,8 +64,12 @@
             
             <li><div class="divider"></div></li>
             <li><a class="subheader">Transacciones</a></li>
-            <li><a href="#" onclick=""><i class="material-icons">publish</i>Enviadas</a></li>
-            <li><a href="#" onclick=""><i class="material-icons">trending_up</i>En cola</a></li>
+            <li><a href="#" onclick="mostrar_transacciones_enviadas();"><i class="material-icons">publish</i>Enviadas</a></li>
+            <li><a href="#" onclick="mostrar_transacciones_en_cola();"><i class="material-icons">trending_up</i>En cola</a></li>
+
+            <li><div class="divider"></div></li>
+            <li><a class="subheader">Balance</a></li>
+            <li><a href="#" onclick=""><i class="material-icons">pie_chart</i>Ver</a></li>
         </ul>    
         <div class="row teal accent-4 white-text" style="margin-bottom:0;">
           <div class="col s12 valign-wrapper mostrar_nav" data-activates="slide-out" style="padding:20px;">
@@ -87,14 +91,7 @@
     </div>
     </section>
     <section id="third_time_home" style="display:none;">
-        <div class="row">
-            <p><span id="msg_error"></span>
-            <div class="col s6 offset-s3">
-                <button id="recargar" class="btn waves-effect waves-light teal z-depth-4">Reload
-                    <i class="material-icons right">send</i>
-                </button>                
-            </div>
-        </div>
+
     </section>
     <script type="text/javascript" src="cordova.js"></script>
 <script src="js/jquery-3.2.1.min.js"></script>
