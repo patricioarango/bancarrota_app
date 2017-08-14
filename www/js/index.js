@@ -248,7 +248,7 @@ function calcular_para_sincronizar(){
         }
 }    
 
-$(document).on('click', 'li', function(e){
+$("#insert").on('click', 'li', function(e){
     e.preventDefault();
     var posicionscroll = $(this).data("posicionscroll");
     var cantidad = (posicionscroll * 250);
@@ -285,7 +285,7 @@ function mostrar_login(){
 
 function limpiar_vista(){
     $("#first_time_home").html("");
-    $("#categorias_container").html("");
+    $("#categorias_container #insert").html("");
     $("#first_time_home").hide();
     $("#categorias_container").hide();
 }
