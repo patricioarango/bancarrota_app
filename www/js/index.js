@@ -125,7 +125,7 @@ function insertar_categoria_en_vista(posicion,categoria){
                 '</div></li>');        
 }
 
-$("#escanear").on('click',function(e) {
+$(document).on('click',"#escanear",function(e) {
     e.preventDefault();
     getQrCode();
 });
