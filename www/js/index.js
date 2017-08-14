@@ -41,6 +41,7 @@
             mostrar_login();
         } else {
             console.log("logueado");
+            $("#first_time_home").show();
             traer_categorias();
         }
     }
@@ -73,7 +74,7 @@ connectedRef.on("value", function(snap) {
 });
 
 function traer_categorias(){
-    mostrar_container_categorias();
+    limpiar_categorias();
     var subcategorias = JSON.parse(window.localStorage.getItem("bancarrota_subcategorias"));
     var posicion = 0;
     if (subcategorias !== null){
@@ -85,7 +86,7 @@ function traer_categorias(){
         }); 
     } else {
         var error_string = '<div class="row">'+
-            '<p><span id="msg_error"><p>No hay subcategorias para mostrar. La primera vez necesitamos conexión para sincronizar</p></span>'+
+            '<p><span id="msg_error"><p>Error: No hay subcategorias para mostrar. </p></span>'+
             '<div class="col s6 offset-s3">'+
                 '<button id="recargar" class="btn waves-effect waves-light teal z-depth-4">Reload '+'<i class="material-icons right">send</i>'+
                 '</button>'+           
@@ -96,7 +97,7 @@ function traer_categorias(){
 }
 
 function traer_todas_categorias(){
-    mostrar_container_categorias();
+    limpiar_categorias();
     var subcategorias = JSON.parse(window.localStorage.getItem("bancarrota_subcategorias"));
     var posicion = 0;
     if (subcategorias.length > 0){
@@ -164,11 +165,22 @@ function codigo_escaneado(qrcode){
     window.localStorage.setItem("bancarrota_photoURL",datos[3]);
     window.localStorage.setItem("bancarrota_site_url",datos[4]);
     window.localStorage.setItem("bancarrota_registrado",1);
-    sincronizar_subcategorias();
+    sincronizar_y_mostrar_subcategorias();
 }
 
 function sincronizar_subcategorias(){
     console.log("sincronizar_subcategorias");
+    var google_id = window.localStorage.getItem("bancarrota_google_id");
+    if (google_id != null){
+        db.ref('/bancarrota/'+google_id+'/subcategorias').on('value', function(snapshot) {
+            window.localStorage.setItem("bancarrota_subcategorias",JSON.stringify(snapshot.val()));
+        });
+    }
+}
+
+function sincronizar_y_mostrar_subcategorias(){
+    console.log("sincronizar_y_mostrar_subcategorias");
+    $("#first_time_home").show();
     var google_id = window.localStorage.getItem("bancarrota_google_id");
     if (google_id != null){
         db.ref('/bancarrota/'+google_id+'/subcategorias').on('value', function(snapshot) {
@@ -273,12 +285,13 @@ function mostrar_login(){
     $("#login_contenedor").show();
 }
 
-function mostrar_container_categorias(){
- 
+function limpiar_categorias(){
+    $("#insert").empty();
 }
 
 function show_error_vista(error){
-
+  $("#listado").empty();
+  $("#listado").append(error);
 }
 
 $(function(){
