@@ -260,13 +260,10 @@ function calcular_para_sincronizar(){
         }
 }    
 
-/*$("#insert").on('click', 'li', function(e){
+$(document).on('click', '#insert li', function(e){
     e.preventDefault();
-    var posicionscroll = $(this).data("posicionscroll");
-    var cantidad = (posicionscroll * 250);
-    //console.log(cantidad);
-    //$("html, body").animate({ scrollTop: cantidad }, 600);
-});*/
+   $('.collapsible-body input[type="number"]', this).focus();
+});
 
 $(document).on('click','#recargar', function(event) {
     event.preventDefault();
