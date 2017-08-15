@@ -346,8 +346,8 @@ function show_error_vista(error){
 
 function mostrar_balance(){
     limpiar_categorias();
-
     var google_id = window.localStorage.getItem("bancarrota_google_id");
+
     if (google_id != null){
         db.ref('/bancarrota/'+google_id+'/gastos').on('value', function(snapshot) {
         var gastos = snapshot.val();    
@@ -378,6 +378,7 @@ function mostrar_balance(){
             '</div>'+
           '</div>');
          });
+    }
 }
 
 
