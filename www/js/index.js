@@ -118,9 +118,9 @@ function insertar_categoria_en_vista(posicion,categoria){
             } else {
                 var icono = categoria.icono;
             }
-            $("#insert").append('<li data-posicionscroll="'+posicion+'" class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" style="border-bottom:0px;"><div class="col s7 offset-s2"><i class="material-icons large">'+icono+'</i>'+categoria.subcategoria+'</div></div>'+
+            $("#insert").append('<li data-posicionscroll="'+posicion+'" class="'+colors[posicion]+'" style="padding:20px;"><div class="collapsible-header '+colors[posicion]+' white-text" data-posicionpantalla="'+posicion+'" style="border-bottom:0px;"><div class="col s7 offset-s2"><i class="material-icons large">'+icono+'</i>'+categoria.subcategoria+'</div></div>'+
                 '<div class="collapsible-body '+colors[posicion]+'" style="border-bottom:0px;">'+
-                '<input type="number" class="white-text" name="importe" placeholder="importe" id="importe_'+categoria.id_subcategoria+'" style="border-bottom:1px solid white;">'+
+                '<input type="number" data-inputposicion="'+posicion+'" class="white-text" name="importe" placeholder="importe" id="importe_'+categoria.id_subcategoria+'" style="border-bottom:1px solid white;">'+
                 '<input type="text" class="white-text" name="observacion" placeholder="observacion" id="observacion_'+categoria.id_subcategoria+'" style="border-bottom:1px solid white;">'+
                 '<button style="margin-top:20px;" class="btn btn-floating btn-large pink pulse enviar_transaccion right" data-posicion="'+posicion+'" value="'+categoria.id_subcategoria+'" data-subcategoria="'+categoria.subcategoria+'"><i class="material-icons">send</i></button>'+
                 '</div></li>');        
@@ -260,9 +260,10 @@ function calcular_para_sincronizar(){
         }
 }    
 
-$(document).on('click', '#insert li', function(e){
+$(document).on('click', '#insert .collapsible-header', function(e){
     e.preventDefault();
-   $('.collapsible-body input[type="number"]', this).focus();
+   var posicion = $(this).data("posicionpantalla");
+   $(document).find('[data-inputposicion="'+posicion+'"]').focus();
 });
 
 $(document).on('click','#recargar', function(event) {
