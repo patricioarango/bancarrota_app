@@ -363,7 +363,7 @@ function mostrar_balance(){
             '</div>'+
             '<div class="row">'+
               '<div class="col s12 m8 offset-m4 offset-s2">'+
-                gastos.estimados+' (gastos estimados) // los posta son '+gastos.reales 
+                gastos.estimados+' (gastos estimados) // los posta son '+gastos.reales+ 
               '</div> '+
             '</div>'+
             '<div class="row">'+
